@@ -1,18 +1,18 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private Soldier soldier;
     [SerializeField] private Tank tank;
+    [SerializeField] private Transform alliedSpawnPoint;
 
-    private AlliedSpawner _spawner;
+    private Spawner _spawner;
     private Unit _unit;
 
     private void Awake()
     {
-        _spawner = GetComponent<AlliedSpawner>();
+        _spawner = GetComponent<Spawner>();
     }
 
     private void Update()
@@ -47,15 +47,27 @@ public class SpawnManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.S))
         {
-            _unit = _spawner.SpawnAlly(soldier);
+            _unit = _spawner.SpawnUnit(soldier);
             _unit.name = soldier.name;
-            _unit.transform.Translate(Vector3.left * Random.Range(-10f, 10f));
+            
+            var startPosition = alliedSpawnPoint.position;
+            startPosition.x += Random.Range(-20f, 20f);
+            startPosition.z += Random.Range(-8f, 10f);
+            
+            _unit.transform.position = startPosition;
+            _unit.Activate();
         }
         if (Input.GetKeyUp(KeyCode.T))
         {
-            _unit = _spawner.SpawnAlly(tank);
+            _unit = _spawner.SpawnUnit(tank);
             _unit.name = tank.name;
-            _unit.transform.Translate(Vector3.right * Random.Range(-10f, 10f));
+
+            var startPosition = alliedSpawnPoint.position;
+            startPosition.x += Random.Range(-20f, 20f);
+            startPosition.z += Random.Range(-8f, 10f);
+            
+            _unit.transform.position = startPosition;
+            _unit.Activate();
         }
     }
 }

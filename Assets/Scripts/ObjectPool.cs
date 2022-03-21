@@ -18,7 +18,7 @@ public class ObjectPool : Singleton<ObjectPool>
         {
             _pooledObjects[i] = new List<GameObject>();
 
-            var newGameObject = Instantiate(gameObject);
+            var newGameObject = Instantiate(gameObject); // todo: Replace prototype class instead
             newGameObject.name = gameObject.name;
             PoolObject(newGameObject);
             i++;
@@ -59,7 +59,7 @@ public class ObjectPool : Singleton<ObjectPool>
                     return pooledObject;
                 }
 
-                var newObject = Instantiate(prefabs[i]);
+                var newObject = Instantiate(prefabs[i]); // todo: Replace with prototype class
                 newObject.name = prefab.name;
 
                 return newObject;

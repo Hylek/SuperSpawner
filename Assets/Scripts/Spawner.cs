@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class AlliedSpawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     private ICopyable _copy;
 
-    public Unit SpawnAlly(Unit prototype)
+    public Unit SpawnUnit(Unit prototype)
     {
         _copy = prototype.Copy();
 
