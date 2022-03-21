@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class ObjectPool : Singleton<ObjectPool>
 {
-    public GameObject[] prefabs;
+    [SerializeField] private GameObject[] prefabs;
 
-    public List<GameObject>[] pooledObjects;
+    private List<GameObject>[] _pooledObjects;
 
     public override void Awake()
     {
         base.Awake();
 
-        pooledObjects = new List<GameObject>[prefabs.Length];
+        _pooledObjects = new List<GameObject>[prefabs.Length];
 
         var i = 0;
         foreach (var gameObject in prefabs)
         {
-            pooledObjects[i] = new List<GameObject>();
+            _pooledObjects[i] = new List<GameObject>();
 
             var newGameObject = Instantiate(gameObject);
             newGameObject.name = gameObject.name;
@@ -33,7 +33,7 @@ public class ObjectPool : Singleton<ObjectPool>
             {
                 obj.SetActive(false);
                 obj.transform.parent = gameObject.transform;
-                pooledObjects[i].Add(obj);
+                _pooledObjects[i].Add(obj);
 
                 return;
             }
@@ -49,17 +49,21 @@ public class ObjectPool : Singleton<ObjectPool>
 
             if (prefab.name == typeName)
             {
-                if (pooledObjects[i].Count > 0)
+                if (_pooledObjects[i].Count > 0)
                 {
-                    var pooledObject = pooledObjects[i][0];
+                    var pooledObject = _pooledObjects[i][0];
                     pooledObject.SetActive(true);
                     pooledObject.transform.parent = null; // todo: Allow custom parent?
-                    pooledObjects[i].Remove(pooledObject);
+                    _pooledObjects[i].Remove(pooledObject);
 
                     return pooledObject;
                 }
+
+                var newObject = Instantiate(prefabs[i]);
+                newObject.name = prefab.name;
+
+                return newObject;
             }
-            return Instantiate(prefabs[i]);
         }
 
         return null; // todo: null case needs to be handled.
