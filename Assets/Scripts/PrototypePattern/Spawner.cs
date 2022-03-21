@@ -1,8 +1,9 @@
 ﻿using GenericSystems;
+using UnityEngine;
 
 namespace PrototypePattern
 {
-    public class Spawner : Singleton<Spawner>
+    public class Spawner : MonoBehaviour
     {
         private ICopyable _copy;
 

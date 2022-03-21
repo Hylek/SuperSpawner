@@ -10,11 +10,13 @@ namespace Units
         [SerializeField] private Unit[] units;
 
         private List<Unit>[] _pooledUnits;
+        private Spawner _spawner;
 
         public override void Awake()
         {
             base.Awake();
 
+            _spawner = GetComponent<Spawner>();
             _pooledUnits = new List<Unit>[units.Length];
 
             var i = 0;
@@ -22,7 +24,7 @@ namespace Units
             {
                 _pooledUnits[i] = new List<Unit>();
 
-                var unitCopy = Spawner.Instance.SpawnUnit(unit);
+                var unitCopy = _spawner.SpawnUnit(unit);
                 unitCopy.name = unit.name;
                 PoolObject(unitCopy);
                 i++;
@@ -31,6 +33,7 @@ namespace Units
 
         public void PoolObject(Unit unit)
         {
+            unit.DeActivate();
             for (var i = 0; i < units.Length; i++)
             {
                 if (units[i].name == unit.name)
@@ -63,7 +66,7 @@ namespace Units
                         return pooledUnit;
                     }
 
-                    var newObject = Spawner.Instance.SpawnUnit(units[i]);
+                    var newObject = _spawner.SpawnUnit(units[i]);
                     newObject.name = prefab.name;
 
                     return newObject;

@@ -1,4 +1,5 @@
-﻿using PrototypePattern;
+﻿using System;
+using PrototypePattern;
 using Units;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -43,7 +44,7 @@ namespace GenericSystems
         {
             if (Input.GetKeyUp(KeyCode.S))
             {
-                _unit = UnitPool.Instance.GetUnit("Soldier");
+                _unit = UnitFactory.GetUnit(UnitType.Soldier);
 
                 var startPosition = alliedSpawnPoint.position;
                 startPosition.x += Random.Range(-20f, 20f);
@@ -54,7 +55,7 @@ namespace GenericSystems
             }
             if (Input.GetKeyUp(KeyCode.T))
             {
-                _unit = UnitPool.Instance.GetUnit("Tank");
+                _unit = UnitFactory.GetUnit(UnitType.Tank);
 
                 var startPosition = alliedSpawnPoint.position;
                 startPosition.x += Random.Range(-20f, 20f);
