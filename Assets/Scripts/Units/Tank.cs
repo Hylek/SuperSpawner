@@ -1,12 +1,11 @@
 ﻿using System;
+using PrototypePattern;
 using UnityEngine;
 
-// todo: Both this class and Tank are very similar, should be combined into base class or similar.
-
-public class Soldier : Unit
+public class Tank : Unit
 {
     [SerializeField] private float speed;
-    
+
     private bool _canMove;
 
     private void Awake()
@@ -33,7 +32,7 @@ public class Soldier : Unit
             Move();
         }
     }
-    
+
     public void Advance()
     {
         _canMove = true;
@@ -46,11 +45,21 @@ public class Soldier : Unit
 
     public void Move()
     {
-        transform.position += Vector3.forward * (speed * Time.deltaTime); 
+        transform.position += Vector3.forward * (speed * Time.deltaTime);
     }
 
-    public void Shoot()
+    public void FireCannon()
     {
-        
+            
+    }
+
+    public void FireMachineGun()
+    {
+            
+    }
+
+    public void Repair()
+    {
+            
     }
 }

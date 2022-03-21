@@ -1,4 +1,6 @@
-﻿public class Gunner : Unit
+﻿using PrototypePattern;
+
+public class Gunner : Unit
 {
     public void Retreat()
     {
